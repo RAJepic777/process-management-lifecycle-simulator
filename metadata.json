@@ -1,0 +1,6 @@
+{
+  "name": "OS Process Management Lifecycle Simulator",
+  "description": "Interactive Operating System Process Management Lifecycle visualizer and simulator for SRM Institute of Science and Technology, Ramapuram Campus.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

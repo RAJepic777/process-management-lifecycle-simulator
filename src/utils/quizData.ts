@@ -1,0 +1,108 @@
+import { QuizQuestion } from '../types/os';
+
+export const OS_QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    id: 1,
+    question: 'In the standard 5-State Process Model, which state transition is strictly disallowed by the Operating System?',
+    options: [
+      'Waiting (Blocked) to Ready',
+      'Running to Waiting (Blocked)',
+      'Waiting (Blocked) to Running',
+      'Running to Ready',
+    ],
+    correctIndex: 2,
+    explanation: 'A process in the Waiting/Blocked state cannot directly seize the CPU and jump to Running. Upon I/O or event completion, it is moved to the Ready Queue, where the Short-Term Scheduler will later dispatch it.',
+    topic: 'Process State Model',
+  },
+  {
+    id: 2,
+    question: 'Where is the Process Control Block (PCB) stored, and by whom is it accessed?',
+    options: [
+      'In User Stack, accessible by any user program',
+      'In Protected Kernel Memory, accessible exclusively by the OS Kernel',
+      'In the CPU Cache, readable by high-priority user threads',
+      'On the hard drive swap partition only',
+    ],
+    correctIndex: 1,
+    explanation: 'The PCB contains sensitive process state, register dumps, memory boundaries, and permission tables. It resides strictly in protected Kernel Space to prevent unauthorized user-mode tampering.',
+    topic: 'Process Control Block',
+  },
+  {
+    id: 3,
+    question: 'What is the primary performance overhead associated with a Context Switch?',
+    options: [
+      'Zero overhead because the CPU runs context switches in parallel',
+      'Saving/restoring hardware registers, updating PCB, and flushing translation lookaside buffer (TLB) caches',
+      'Compressing the text code segment on disk',
+      'Deleting all open file descriptors for the current process',
+    ],
+    correctIndex: 1,
+    explanation: 'A context switch is pure overhead because the CPU performs no useful computational work while saving register state to the outgoing PCB, loading the incoming PCB, and invalidating memory caches (TLB).',
+    topic: 'Context Switching',
+  },
+  {
+    id: 4,
+    question: 'What happens to a process when its child terminates via exit(), but the parent has not yet executed wait()?',
+    options: [
+      'The child immediately becomes an Orphan process and is adopted by PID 1',
+      'The child becomes a Zombie (Defunct) process whose PCB remains in the process table',
+      'The operating system immediately deletes the child PCB from memory',
+      'The parent process is forcefully killed by the kernel',
+    ],
+    correctIndex: 1,
+    explanation: 'A terminated child whose parent has not yet reaped it with wait() is called a Zombie. Its memory is freed, but an entry remains in the process table so the parent can inspect its exit status code.',
+    topic: 'Process Lifecycle & Termination',
+  },
+  {
+    id: 5,
+    question: 'Which CPU scheduling algorithm guarantees minimum average waiting time for a given set of stationary processes?',
+    options: [
+      'First-Come First-Served (FCFS)',
+      'Round Robin (RR)',
+      'Shortest Job First (SJF / SRTF)',
+      'Priority Scheduling without Aging',
+    ],
+    correctIndex: 2,
+    explanation: 'Shortest Job First (SJF) is mathematically optimal: giving preference to shorter jobs moves more processes out of waiting earlier, minimizing the cumulative waiting time across all processes.',
+    topic: 'CPU Scheduling Algorithms',
+  },
+  {
+    id: 6,
+    question: 'In an extended 7-State Process Model, why does the OS introduce "Suspended Ready" and "Suspended Blocked" states?',
+    options: [
+      'To allow processes to execute directly on the GPU without a CPU',
+      'To relieve main memory (RAM) pressure by swapping processes out to secondary storage (swap disk)',
+      'To bypass the scheduler entirely for system daemons',
+      'To prevent kernel panic during power loss',
+    ],
+    correctIndex: 1,
+    explanation: 'When physical RAM is exhausted (high degree of multiprogramming), the Medium-Term Scheduler suspends low-priority or blocked processes and swaps their address space to the disk.',
+    topic: '7-State Model & Swapping',
+  },
+  {
+    id: 7,
+    question: 'When a user-level process issues an I/O system call like read() or write(), how does the transition to the Waiting state occur?',
+    options: [
+      'The process polls a hardware bit until the disk is ready',
+      'The CPU executes a software trap/interrupt (e.g., syscall / int 0x80) switching to Kernel mode',
+      'The CPU switches off and restarts',
+      'The disk controller directly modifies user-mode stack pointers',
+    ],
+    correctIndex: 1,
+    explanation: 'System calls trigger a software trap (supervisor call) that transitions CPU privilege from User Mode (Ring 3) to Kernel Mode (Ring 0), allowing the OS kernel to place the process into the device wait queue.',
+    topic: 'System Calls & Traps',
+  },
+  {
+    id: 8,
+    question: 'What technique does an Operating System employ to prevent starvation (indefinite blocking) in Priority Scheduling?',
+    options: [
+      'Context Switch Throttling',
+      'Aging — gradually increasing the priority of processes waiting in the Ready queue over time',
+      'Random priority reshuffling every clock cycle',
+      'Decreasing the burst time of high-priority processes',
+    ],
+    correctIndex: 1,
+    explanation: 'Aging is the standard OS solution to starvation: as a process sits in the ready queue without CPU attention, its priority number is gradually upgraded until it eventually becomes the highest-priority job.',
+    topic: 'Scheduling Starvation & Aging',
+  },
+];
